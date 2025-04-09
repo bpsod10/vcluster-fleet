@@ -1,0 +1,36 @@
+helm:
+  values:
+    # The default-settings section is the values passed to the vcluster Helm chart
+    default-values:
+      controlPlane:
+        distro:
+          k8s:
+            version: v1.31.4
+      networking:
+        advanced:
+          proxyKubelets:
+            byHostname: false
+
+    # Each entry in the vcluster-deployments list represents one vcluster. The
+    # `overrides` key allows for overriding anything in the `default-values` above
+    # for that particular cluster.
+    vcluster-deployments:
+    - cluster: rke2-homelab
+      namespace: vcluster-prod
+      projectId: p-r95pt
+      overrides: {}
+    - cluster: rke2-homelab
+      namespace: vcluster-prod3
+      projectId: p-r95pt
+      overrides:
+        controlPlane:
+          distro:
+            k8s:
+              version: v1.32.0
+
+    # These project the Fleet cluster labels into Helm values that can be
+    # referenced in templates. See https://fleet.rancher.io/ref-fleet-yaml#templating
+    fleet:
+      cluster-name: global.fleet.clusterLabels.management.cattle.io/cluster-display-name
+      cluster-id: global.fleet.clusterLabels.management.cattle.io/cluster-name
+      cluster-stage: global.fleet.clusterLabels.fleet-stage
