@@ -1,0 +1,14 @@
+{{ range .Values.vcluster-deployments }}
+  {{- if eq .cluster $.Values.fleet.cluster-name }}
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: drekar-vcluster-{{ .namespace }}
+  namespace: {{ .namespace }}
+spec:
+  chart: loft/vcluster
+  set:
+{{- toYaml merge $.Values.default-values .overrides | indent 4 }}
+---
+  {{- end }}
+{{- end }}
