@@ -11,4 +11,4 @@ spec:
   set:
 {{ toYaml (merge $.Values.default-values .overrides) | indent 4 }}
   {{- end }}
-{{- end }
+{{- end }}
