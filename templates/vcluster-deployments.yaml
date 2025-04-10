@@ -1,6 +1,6 @@
 {{- range .Values.vcluster-deployments }}
   {{- if eq .cluster $.Values.fleet.cluster-name }}
----
+
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
